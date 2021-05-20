@@ -104,6 +104,6 @@ theme: coder
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: git@github.com:Leon-xmy/share.git
+  repo: git@github.com:Leon-xmy/Leon-xmy.github.io.git
   # example, https://github.com/Leon-xmy/hexojs.github.io
   branch: gh-pages
