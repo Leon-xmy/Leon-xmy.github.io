@@ -1,8 +1,8 @@
 ---
 layout: GitPull
-title: 未指定策略执行pull操作 Pulling without specifying how to reconcile divergent branches is discouraged
+title: 未指定策略执行pull操作
 date: 2021-05-20 10:04:15
-tags: git pull
+tags: git pull,  Pulling without specifying how to reconcile divergent branches is discouraged
 ---
 
 #### 问题
