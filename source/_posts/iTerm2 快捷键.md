@@ -47,7 +47,7 @@ tags:
 
 ```
 
-ctrl + a / C+e 这个几乎在哪都可以使用
+ctrl + a / ctrl + e 这个几乎在哪都可以使用
 ctrl + p / !! 上一条命令
 ctrl + k 从光标处删至命令行尾
 ctrl + w 从光标处删至字首
