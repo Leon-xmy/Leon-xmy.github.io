@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="google-site-verification" content="TZE0rZyIqLl10trYu3BWBWa1Vmz6HFwhb2OcNEK4u-s" />
+     <link rel="shortcut icon" href= /img/favicon.ico >
+    <title>
+        Hexo
+    </title>
+    <meta name="description" content= 嘿，我是Leon～这是我的子站，欢迎访问！ >
+    <meta name="keywords" content= Blog,Hexo,Theme,Leon,LiuXunzhuo >
+    
+<link rel="stylesheet" href="/libs/highlight/styles/monokai-sublime.css">
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body id="bodyx">
+    <div class="hd posts">
+    <a href="/index.html"><i class="fa fa-home
+ replay-btn" aria-hidden="true"></i></a>
+    <div class="post-title">
+        <p>
+            
+        </p>
+        <hr>
+    </div>
+    <div class="post-content">
+        <h3 id="webpack-打包优化"><a href="#webpack-打包优化" class="headerlink" title="webpack 打包优化"></a>webpack 打包优化</h3><h4 id="优化构建速度"><a href="#优化构建速度" class="headerlink" title="优化构建速度"></a>优化构建速度</h4><p>1.使用高版本的 webpack<br>webpack4 新版本的优化使用 v8 引擎，v8 带来的优化包括</p>
+<pre><code>for of 替代 forEach
+Map和Set 替代Object
+includes 替代 indexOf()
+默认使用更快的md4 hash算法 替代 md5算法，md4较md5速度更快
+webpack AST 可以直接从loader传递给AST，从而减少解析时间
+使用字符串方法替代正则表达式
+
+更高版本的node.js对原生js api和js数据结构做出进一步的优化
+</code></pre>
+<p>2.多线程 # happypack:<br>在使用 Webpack 对项目进行构建时，会对大量文件进行解析和处理。当文件数量变多之后，Webpack 构件速度就会变慢。由于运行在 Node.js 之上的 Webpack 是单线程模型的，所以 Webpack 需要处理的任务要一个一个进行操作。<br>Happypack 的作用就是将文件解析任务分解成多个子进程并发执行。子进程处理完任务后再将结果发送给主进程。所以可以大大提升 Webpack 的项目构件速度 1. 引入 2. 将 loader 换成 happypack 的 loader 3. 创建 happypack 插件 # thread-loader<br>开启多线程打包，这个 loader 之前执行的 loader 就会在一个单独的 worker 池(worker pool)中运行<br>loader 的执行顺序是从下到上，从右到左 3.缩小打包作用域：<br>exclude/include (确定 loader 规则范围)<br>resolve.modules 指明第三方模块的绝对路径 (减少不必要的查找)<br>resolve.extensions 尽可能减少后缀尝试的可能性<br>noParse 对完全不需要解析的库进行忽略 (不去解析但仍会打包到 bundle 中，注意被忽略掉的文件里不应该包含 import、require、define 等模块化语句)<br>IgnorePlugin (完全排除模块)<br>合理使用 alias 4.充分利用缓存提升二次构建速度：<br>babel-loader 开启缓存<br>terser-webpack-plugin 开启缓存<br>使用 cache-loader 或者 hard-source-webpack-plugin<br>注意：thread-loader 和 cache-loader 兩個要一起使用的話，請先放 cache-loader 接著是 thread-loader 最後才是 heavy-loader<br>5.DLL：<br>使用 DllPlugin 进行分包，使用 DllReferencePlugin(索引链接) 对 manifest.json 引用，让一些基本不会改动的代码先打包成静态资源，避免反复编译浪费时间。</p>
+<p>影响前端发布速度的有两个方面，一个是构建，一个就是压缩，把这两个东西优化起来，可以减少很多发布的时间。</p>
+<h4 id="优化打包体积"><a href="#优化打包体积" class="headerlink" title="优化打包体积"></a>优化打包体积</h4><p>压缩代码<br>进行多线程压缩<br>1.urglifyjs-weboack-plugin<br>2.terser-webpack-plugin</p>
+<p>提取页面公共资源<br>使用 html-webpack-externals-plugin，将基础包通过 CDN 引入，不打入 bundle 中<br>Tree shaking<br>purgecss-webpack-plugin 和 mini-css-extract-plugin 配合使用(建议)<br>图片压缩<br>image-webpack-loader</p>
+
+    </div>
+
+    
+        <hr class="fhr">
+        <div id="vcomments"></div>
+    
+</div>
+    <div class="footer" id="footer">
+    <p><h4>版权所有 © 2020 | 作者: Leon | 主题 By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">本站浏览总访问量: <span id="busuanzi_value_site_pv"></span></span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_container_site_uv">本站访问人数: <span id="busuanzi_value_site_uv"></span></span>
+    
+    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+        <input type="checkbox" name="switch" id="update_style">
+        <span class="el-switch-style"></span>
+    </label>
+
+    <!--         <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+    document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script> -->
+</p>
+</div>
+
+<input type="hidden" id="web_style" value="black">
+<input type="hidden" id="valine_appid" value="NOsswOncKgc8HOxqo9oxIWlX-gzGzoHsz">
+<input type="hidden" id="valine_appKey" value="z1FihjWEbS8uIfUQdmCtK7zz">
+
+<script src="/libs/jquery.min.js"></script>
+
+
+<script src="/libs/highlight/highlight.pack.js"></script>
+
+<script src='//cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js'></script>
+
+<script src="/js/js.js"></script>
+
+<style type="text/css">
+.v * {
+color: #698fca;
+}
+.v .vlist .vcard .vhead .vsys {
+color: #3a3e4a;
+}
+.v .vlist .vcard .vh .vmeta .vat {
+color: #638fd5;
+}
+.v .vlist .vcard .vhead .vnick {
+color: #6ba1ff;
+}
+.v a {
+color: #8696b1;
+}
+.v .vlist .vcard .vhead .vnick:hover {
+color: #669bfc;
+}
+</style>
+    <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+</body>
+</html>
